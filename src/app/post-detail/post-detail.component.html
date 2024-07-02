@@ -1,0 +1,56 @@
+<app-menu></app-menu>
+<div class="container post-container">
+    <div class="post-content">
+      <h1>{{ post.titulo }}</h1>
+      <p>{{ post.contenido }}</p>
+  
+      <div *ngIf="post.img" class="text-center">
+        <img [src]="'http://localhost:8080' + post.img" alt="Post Image" class="post-image">
+      </div>
+  
+      <div *ngIf="post.archivo" class="text-center mt-3">
+        <a [href]="'http://localhost:8080' + post.archivo" target="_blank">
+          <button class="btn btn-primary">Ver Documento</button>
+        </a>
+      </div>
+  
+      <div class="post-user d-flex align-items-center mt-4">
+        <img [src]="'http://localhost:8080' +  post.usuario.img" alt="Usuario Image" class="rounded-circle me-3">
+        <span>{{ post.usuario.nombre }}</span><span> {{post.usuario.apellido}}</span>
+      </div>
+  
+      <div class="comment-form mt-5">
+        <h3>Agregar Comentario</h3>
+        <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()" class="shadow p-4 bg-light rounded">
+          <div class="mb-3">
+            <label for="titulo" class="form-label">Título:</label>
+            <input id="titulo" formControlName="titulo" class="form-control">
+          </div>
+  
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción:</label>
+            <textarea id="descripcion" formControlName="descripcion" class="form-control"></textarea>
+          </div>
+  
+          <div class="mb-3">
+            <label for="img" class="form-label">Imagen:</label>
+            <input id="img" type="file" (change)="onFileChange($event)" class="form-control">
+          </div>
+  
+          <button type="submit" class="btn btn-primary w-100">Agregar Comentario</button>
+        </form>
+      </div>
+  
+      <div class="comments-section mt-5">
+        <h3>Comentarios</h3>
+        <div *ngFor="let comment of comments" class="comment shadow-sm p-3 mb-4 bg-white rounded">
+          <h4>{{ comment.titulo }}</h4>
+          <p>{{ comment.descripcion }}</p>
+          <div *ngIf="comment.img" class="text-center">
+            <img [src]="comment.img" alt="Comment Image" class="comment-image">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

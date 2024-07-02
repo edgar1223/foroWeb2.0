@@ -1,0 +1,79 @@
+<app-menu></app-menu>
+<div class="profile-container container">
+  <div class="row profile-header">
+    <div class="col-md-3">
+      <img [src]="'http://localhost:8080' + user.imgUrl" alt="Profile Image" class="profile-img img-fluid">
+    </div>
+  </div>
+
+  <div class="row profile-details mt-4">
+    <div class="col-md-9">
+      <div class="datos" *ngIf="!editar">
+      <h3>Detalles del Usuario</h3>
+      <p><strong>Nombre:</strong> {{ user.nombre }}</p>
+      <p><strong>Apellido:</strong> {{ user.apellido }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p *ngIf="user.departamentoId"><strong>Materia:</strong> {{ user.departamentoId }}</p>
+      <p *ngIf="user.semestre"><strong>Semestre:</strong> {{ user.semestre }}</p>
+      <p><strong>Rol: </strong>{{rol}}</p>
+    </div>
+      <div class="formulario" *ngIf="editar">
+        <div class="form-group">
+          <label for="usr">Nombre:</label>
+          <input type="text" class="form-control" id="usr" [(ngModel)]="user.nombre">
+        </div>
+        <div class="form-group">
+          <label for="usr">Apellido:</label>
+          <input type="text" class="form-control" id="apellido" [(ngModel)]="user.apellido">
+        </div>
+        <div class="form-group">
+          <label for="usr">Email:</label>
+          <input type="text" class="form-control" id="email" [(ngModel)]="user.email">
+        </div>
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="pwd" [(ngModel)]="user.password">
+        </div> 
+        <div class="form-group">
+          <label for="usr-img">Seleccionar Imagen:</label>
+          <input type="file" class="form-control" id="usr-img" (change)="onFileChange($event)" >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 d-flex flex-column align-items-center acciones">
+      <button  *ngIf="!editar" type="button" class="btn btn-primary mb-2 w-100" (click)="OpenEdit()">
+        <i class="fas fa-edit"></i> Editar
+      </button>
+      <button  *ngIf="editar" type="button" class="btn btn-success mb-2 w-100" (click)="save()">
+        <i class="far fa-save"></i> Guardar
+      </button>
+      <button type="button" class="btn btn-danger w-100">
+        <i class="fas fa-trash-alt"></i> Eliminar
+      </button>
+    </div>
+  </div>
+
+  <div class="profile-history">
+    <h3>Historial de Posts</h3>
+    <ul>
+      <li *ngFor="let post of posts">
+        <div class="posts" (click)="openPost(post.id)">
+          <h5>{{ post.titulo }}
+          <p>{{post.contenido}}</p>
+          <span *ngIf="post && post.materia && post.materia.materia">{{ post.materia.materia }}</span>
+
+
+
+          </h5>
+        </div>
+        </li>
+    </ul>
+  </div>
+
+  <div class="row profile-charts mt-4">
+    <div class="col-12">
+      <h3>Estadísticas de post por materias</h3>
+      <canvas id="materiaChart"></canvas>
+    </div>
+  </div>
+</div>

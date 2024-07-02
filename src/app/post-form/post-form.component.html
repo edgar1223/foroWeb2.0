@@ -1,0 +1,52 @@
+<app-menu></app-menu>
+
+<div class="container">
+  <h2>Crear Post</h2>
+  <div class="form-container">
+    <div class="preview">      
+      <div class="similar-posts scrollable" *ngIf="similarPosts.length > 0">
+        <h4>Posts Similares</h4>
+        <div  *ngFor="let post of similarPosts" (click)="openPost(post.id)" class="similar-post">
+          <h5>{{ post.titulo }}</h5>
+          <p>{{ post.contenido }}</p>
+        </div>
+        
+      </div>
+    </div>
+    <form [formGroup]="postForm" (ngSubmit)="createPost()">
+      <div class="form-group">
+        <label for="titulo">Título</label>
+        <input type="text" id="titulo" formControlName="titulo" required>
+        <div *ngIf="postForm.controls['titulo'].invalid && (postForm.controls['titulo'].dirty || postForm.controls['titulo'].touched)" class="text-danger">
+          El título es requerido.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="contenido">Contenido</label>
+        <textarea id="contenido" formControlName="contenido" required></textarea>
+        <div *ngIf="postForm.controls['contenido'].invalid && (postForm.controls['contenido'].dirty || postForm.controls['contenido'].touched)" class="text-danger">
+          El contenido es requerido.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="materia">Materia</label>
+        <select id="materia" formControlName="materia" required>
+          <option value="" disabled>Seleccione una materia</option>
+          <option *ngFor="let materia of materias" [ngValue]="materia">{{ materia.materia }}</option>
+        </select>
+        <div *ngIf="postForm.controls['materia'].invalid && (postForm.controls['materia'].dirty || postForm.controls['materia'].touched)" class="text-danger">
+          La materia es requerida.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="img">Imagen (opcional)</label>
+        <input type="file" id="img" (change)="onFileChange($event, 'img')">
+      </div>
+      <div class="form-group">
+        <label for="archivo">Archivo (opcional)</label>
+        <input type="file" id="archivo" (change)="onFileChange($event, 'archivo')">
+      </div>
+      <button type="submit" [disabled]="postForm.invalid">Crear Post</button>
+    </form>
+  </div>
+</div>

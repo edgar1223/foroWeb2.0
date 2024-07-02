@@ -1,0 +1,146 @@
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+  <div class="card d-flex flex-row">
+    <div class="card-left p-4">
+      <h2>Bienvenido</h2>
+      <p>Bienvenido a nuestra aplicación. Por favor, inicia sesión o regístrate para continuar.</p>
+      <div class="img-container">
+        <img src="assets/logo.jpeg" alt="Profile Image" class="profile-img">
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="card-right">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" [class.active]="currentTab === 0" (click)="changeTab(0)">Iniciar Sesión</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" [class.active]="currentTab === 1" (click)="changeTab(1)">Registrar</button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body tab-content">
+        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab" *ngIf="currentTab == 0">
+          <form [formGroup]="loginForm" (ngSubmit)="onLogin()" [@slideInOut]>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" formControlName="email" class="form-control" required>
+              <div *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
+                <div *ngIf="loginForm.controls['email'].errors?.['required']" class="text-danger">
+                  El email es requerido.
+                </div>
+                <div *ngIf="loginForm.controls['email'].errors?.['email']" class="text-danger">
+                  El email no es válido.
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" id="password" formControlName="password" class="form-control" required>
+              <div *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
+                <div *ngIf="loginForm.controls['password'].errors?.['required']" class="text-danger">
+                  La contraseña es requerida.
+                </div>
+              </div>
+            </div>
+            <div class="error-message" *ngIf="errorMessage">
+              {{ errorMessage }}
+              <br>
+            </div>
+            <div *ngIf="loading" class="loading-indicator">
+              <p>Cargando...</p>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="loading">Iniciar Sesión</button>
+          </form>
+        </div>
+        <div class="tab-pane fade show active" id="register" role="tabpanel" aria-labelledby="register-tab" *ngIf="currentTab == 1">
+          <form [formGroup]="registerForm" (ngSubmit)="onRegistro()" [@slideInOut]>
+            <div class="mb-3">
+              <label for="control" class="form-label">Número de control</label>
+              <input type="number" formControlName="control" class="form-control" id="control" required>
+              <div *ngIf="registerForm.controls['control'].invalid && (registerForm.controls['control'].dirty || registerForm.controls['control'].touched)">
+                <div *ngIf="registerForm.controls['control'].errors?.['required']" class="text-danger">
+                  El número de control es requerido.
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" formControlName="nombre" class="form-control" id="nombre" required>
+              <div *ngIf="registerForm.controls['nombre'].invalid && (registerForm.controls['nombre'].dirty || registerForm.controls['nombre'].touched)">
+                <div *ngIf="registerForm.controls['nombre'].errors?.['required']" class="text-danger">
+                  El nombre es requerido.
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input type="text" formControlName="apellido" class="form-control" id="apellido" required>
+              <div *ngIf="registerForm.controls['apellido'].invalid && (registerForm.controls['apellido'].dirty || registerForm.controls['apellido'].touched)">
+                <div *ngIf="registerForm.controls['apellido'].errors?.['required']" class="text-danger">
+                  El apellido es requerido.
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="registerEmail" class="form-label">Email</label>
+              <input type="email" formControlName="email2" class="form-control" id="registerEmail" required>
+              <div *ngIf="registerForm.controls['email2'].invalid && (registerForm.controls['email2'].dirty || registerForm.controls['email2'].touched)">
+                <div *ngIf="registerForm.controls['email2'].errors?.['required']" class="text-danger">
+                  El email es requerido.
+                </div>
+                <div *ngIf="registerForm.controls['email2'].errors?.['email']" class="text-danger">
+                  El email no es válido.
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="semestre" class="form-label">Semestre</label>
+              <input type="number" formControlName="semestre" class="form-control" id="semestre" required>
+              <div *ngIf="registerForm.controls['semestre'].invalid && (registerForm.controls['semestre'].dirty || registerForm.controls['semestre'].touched)">
+                <div *ngIf="registerForm.controls['semestre'].errors?.['required']" class="text-danger">
+                  El semestre es requerido.
+                </div>
+                <div *ngIf="registerForm.controls['semestre'].errors?.['min']" class="text-danger">
+                  El semestre debe ser mayor a 0.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="departamento" class="form-label">Departamento</label>
+              <select id="departamento" formControlName="departamento" class="form-control" required>
+                <option value="" disabled>Seleccione el departamento al que pertenece</option>
+                <option *ngFor="let depa of departamentos" [ngValue]="depa.id">{{ depa.nombre }}</option>
+              </select>
+              <div *ngIf="registerForm.controls['departamento'].invalid && (registerForm.controls['departamento'].dirty || registerForm.controls['departamento'].touched)" class="text-danger">
+                El departamento es requerido.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="registerPassword" class="form-label">Contraseña</label>
+              <input type="password" formControlName="contrase" class="form-control" id="registerPassword" required>
+              <div *ngIf="registerForm.controls['contrase'].invalid && (registerForm.controls['contrase'].dirty || registerForm.controls['contrase'].touched)">
+                <div *ngIf="registerForm.controls['contrase'].errors?.['required']" class="text-danger">
+                  La contraseña es requerida.
+                </div>
+                <div *ngIf="registerForm.controls['contrase'].errors?.['minlength']" class="text-danger">
+                  La contraseña debe tener al menos 6 caracteres.
+                </div>
+              </div>
+            </div>
+            <div class="error-message2" *ngIf="errorMessage">
+              <ul>
+                <li *ngFor="let error of errorMessage.split('<br>')">{{ error }}</li>
+              </ul>
+            </div>
+            <div *ngIf="loading" class="loading-indicator">
+              <p>Cargando...</p>
+            </div>
+            <button type="submit" class="btn btn-primary w-100" [disabled]="loading">Registrar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
