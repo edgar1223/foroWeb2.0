@@ -12,6 +12,7 @@ import { PostFormComponent } from './post-form/post-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ButtonModule } from 'primeng/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
   imports: [
     BrowserModule,BrowserAnimationsModule,
     AppRoutingModule,HttpClientModule
-    ,FormsModule,ReactiveFormsModule
+    ,FormsModule,ReactiveFormsModule,ButtonModule
   ],
   providers: [
     provideClientHydration()

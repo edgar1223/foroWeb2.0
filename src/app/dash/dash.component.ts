@@ -3,14 +3,14 @@ import { Post } from '../models/post';
 import { Materia } from '../models/materia/materia';
 import { PostService } from "../services/post-service.service";
 import { Router } from '@angular/router';
-
+import * as stringSimilarity from 'string-similarity';
 @Component({
   selector: 'app-dash',
   templateUrl: './dash.component.html',
   styleUrls: ['./dash.component.css']
 })
 export class DashComponent implements OnInit {
-  constructor(private postService: PostService,private router: Router,) {}
+  constructor(private postService: PostService, private router: Router) {}
 
   carouselImages = [
     { url: 'https://via.placeholder.com/800x400', title: 'First Slide', description: 'This is the first slide description.' },
@@ -19,7 +19,7 @@ export class DashComponent implements OnInit {
   ];
 
   posts: Post[] = [];
-
+  filteredPosts: Post[] = [];
   materias: Materia[] = [];
   currentPage = 1;
   postsPerPage = 5;
@@ -30,10 +30,10 @@ export class DashComponent implements OnInit {
   materiasPerPage = 7;
   materiasTotalPages!: number;
   paginatedMaterias: Materia[] = [];
+  searchQuery: string = '';
 
   ngOnInit(): void {
     this.getPostAll();
-   
     this.postService.searchMateria().subscribe(
       response => {
         this.materias = response;
@@ -45,23 +45,25 @@ export class DashComponent implements OnInit {
       }
     );
   }
-  getPostAll():void{
+
+  getPostAll(): void {
     this.postService.getPostAll().subscribe(
       response => {
-        
         this.posts = response;
-        this.totalPages = Math.ceil(this.posts.length / this.postsPerPage);
+        this.filteredPosts = this.posts;
+        this.totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
         this.updatePaginatedPosts();
       },
       error => {
-        console.error('Error searching posts', error);
+        console.error('Error fetching posts', error);
       }
     );
   }
+
   updatePaginatedPosts(): void {
     const startIndex = (this.currentPage - 1) * this.postsPerPage;
     const endIndex = startIndex + this.postsPerPage;
-    this.paginatedPosts = this.posts.slice(startIndex, endIndex);
+    this.paginatedPosts = this.filteredPosts.slice(startIndex, endIndex);
   }
 
   updatePaginatedMaterias(): void {
@@ -69,6 +71,23 @@ export class DashComponent implements OnInit {
     const endIndex = startIndex + this.materiasPerPage;
     this.paginatedMaterias = this.materias.slice(startIndex, endIndex);
   }
+
+  searchPosts(): void {
+    if (this.searchQuery) {
+      const lowerSearchQuery = this.searchQuery.toLowerCase();
+      this.filteredPosts = this.posts.filter(post => {
+        const lowerTitle = post.titulo.toLowerCase();
+        const lowerContent = post.contenido.toLowerCase();
+        return lowerTitle.includes(lowerSearchQuery) || lowerContent.includes(lowerSearchQuery);
+      });
+    } else {
+      this.filteredPosts = this.posts;
+    }
+    this.totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
+    this.currentPage = 1;
+    this.updatePaginatedPosts();
+  }
+  
 
   previousPostsPage(): void {
     if (this.currentPage > 1) {
@@ -155,12 +174,21 @@ export class DashComponent implements OnInit {
       return this.materiasCurrentPage + 2;
     }
   }
+
   openPost(postId?: number): void {
-    console.log(postId)
+    console.log(postId);
     if (postId !== undefined && postId !== null) {
       this.router.navigate(['/post', postId]);
     } else {
       console.error('postId is undefined or null');
     }
   }
+  resetPosts(): void {
+    this.searchQuery = '';
+    this.filteredPosts = this.posts;
+    this.totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
+    this.currentPage = 1;
+    this.updatePaginatedPosts();
+  }
+  
 }

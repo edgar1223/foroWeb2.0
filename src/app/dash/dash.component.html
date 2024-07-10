@@ -3,26 +3,61 @@
   <h3 class="my-4">Noticias</h3>
 
   <!-- Carrusel -->
-  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div
+    id="carouselExampleIndicators"
+    class="carousel slide"
+    data-bs-ride="carousel"
+  >
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide-to="0"
+        class="active"
+        aria-current="true"
+        aria-label="Slide 1"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide-to="1"
+        aria-label="Slide 2"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide-to="2"
+        aria-label="Slide 3"
+      ></button>
     </div>
     <div class="carousel-inner">
-      <div *ngFor="let img of carouselImages; let i = index" [class.active]="i === 0" class="carousel-item">
-        <img [src]="img.url" class="d-block w-100" alt="...">
+      <div
+        *ngFor="let img of carouselImages; let i = index"
+        [class.active]="i === 0"
+        class="carousel-item"
+      >
+        <img [src]="img.url" class="d-block w-100" alt="..." />
         <div class="carousel-caption d-none d-md-block">
           <h5>{{ img.title }}</h5>
           <p>{{ img.description }}</p>
         </div>
       </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="prev"
+    >
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="next"
+    >
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -32,36 +67,88 @@
   <div class="row mt-4">
     <div class="col-md-3">
       <ul class="list-group">
-        <li class="list-group-item" *ngFor="let materia of paginatedMaterias">{{ materia.materia }}</li>
+        <li class="list-group-item" *ngFor="let materia of paginatedMaterias">
+          {{ materia.materia }}
+        </li>
       </ul>
       <nav>
         <ul class="pagination custom-pagination">
           <li class="page-item" [class.disabled]="materiasCurrentPage === 1">
-            <button class="page-link" (click)="previousMateriasPage()">Previous</button>
+            <button class="page-link" (click)="previousMateriasPage()">
+              Previous
+            </button>
           </li>
-          <li class="page-item" *ngFor="let page of materiasTotalPagesArray" [class.active]="materiasCurrentPage === page">
-            <button class="page-link" (click)="goToMateriasPage(page)">{{ page }}</button>
+          <li
+            class="page-item"
+            *ngFor="let page of materiasTotalPagesArray"
+            [class.active]="materiasCurrentPage === page"
+          >
+            <button class="page-link" (click)="goToMateriasPage(page)">
+              {{ page }}
+            </button>
           </li>
-          <li class="page-item" [class.disabled]="materiasCurrentPage === materiasTotalPages">
+          <li
+            class="page-item"
+            [class.disabled]="materiasCurrentPage === materiasTotalPages"
+          >
             <button class="page-link" (click)="nextMateriasPage()">Next</button>
           </li>
         </ul>
       </nav>
     </div>
     <div class="col-md-9">
-      <div *ngFor="let post of paginatedPosts" (click)="openPost(post.id)" class="post mb-3">
+      <div class="row mb-4">
+        <div class="col-md-9 search-container">
+          <input
+            pInputText
+            type="text"
+            class="form-control search-input"
+            placeholder="Busca posts..."
+            [(ngModel)]="searchQuery"
+            (input)="searchPosts()"
+            (keyup.enter)="searchPosts()"
+          />
+          <button
+            pButton
+            type="button"
+            label="Buscar"
+            class="search-button"
+            (click)="searchPosts()"
+          ><i class="fas fa-search"></i></button>
+        </div>
+        
+        <div class="col-md-3">
+          <p-button label="Restablecer" icon="fas fa-redo" severity="secondary" (click)="resetPosts()"></p-button>
+
+          
+        </div>
+      </div>
+      
+      <div
+        *ngFor="let post of paginatedPosts"
+        (click)="openPost(post.id)"
+        class="post mb-3"
+      >
         <h5>{{ post.titulo }}</h5>
         <p>{{ post.contenido }}</p>
-        <p>{{post.id}}</p>
+        <p>{{ post.id }}</p>
       </div>
 
       <nav>
         <ul class="pagination custom-pagination">
           <li class="page-item" [class.disabled]="currentPage === 1">
-            <button class="page-link" (click)="previousPostsPage()">Previous</button>
+            <button class="page-link" (click)="previousPostsPage()">
+              Previous
+            </button>
           </li>
-          <li class="page-item" *ngFor="let page of totalPagesArray" [class.active]="currentPage === page">
-            <button class="page-link" (click)="goToPostsPage(page)">{{ page }}</button>
+          <li
+            class="page-item"
+            *ngFor="let page of totalPagesArray"
+            [class.active]="currentPage === page"
+          >
+            <button class="page-link" (click)="goToPostsPage(page)">
+              {{ page }}
+            </button>
           </li>
           <li class="page-item" [class.disabled]="currentPage === totalPages">
             <button class="page-link" (click)="nextPostsPage()">Next</button>
