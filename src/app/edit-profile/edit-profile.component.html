@@ -62,7 +62,8 @@
       <li *ngFor="let post of posts" class="post">
         <div class="posts" (click)="openPost(post.id)">
           <h5>{{ post.titulo }}</h5>
-          <p>{{ getExcerpt(post.contenido) }}</p>
+          <div [innerHTML]="sanitizeContent(extractFirstP(post.contenido))"></div>
+
           <span *ngIf="post && post.materia && post.materia.materia">{{ post.materia.materia }}</span>
         </div>
       </li>

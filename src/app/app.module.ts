@@ -40,6 +40,7 @@ import { MessagesModule } from 'primeng/messages';
 import { ImageModule } from 'primeng/image';
 import { DialogModule } from 'primeng/dialog';
 import { MessageModule } from 'primeng/message';
+import { EditorModule } from 'primeng/editor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +82,8 @@ import { MessageModule } from 'primeng/message';
     FileUploadModule,
     ImageModule,
     DialogModule,
-    MessagesModule,MessageModule
+    MessagesModule,MessageModule,
+    EditorModule
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

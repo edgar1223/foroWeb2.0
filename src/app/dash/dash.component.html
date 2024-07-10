@@ -130,8 +130,7 @@
         class="post mb-3"
       >
         <h5>{{ post.titulo }}</h5>
-        <p>{{ post.contenido }}</p>
-        <p>{{ post.id }}</p>
+        <div [innerHTML]="sanitizeContent(extractFirstP(post.contenido))"></div>
       </div>
 
       <nav>

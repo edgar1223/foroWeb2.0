@@ -4,13 +4,14 @@ import { Materia } from '../models/materia/materia';
 import { PostService } from "../services/post-service.service";
 import { Router } from '@angular/router';
 import * as stringSimilarity from 'string-similarity';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 @Component({
   selector: 'app-dash',
   templateUrl: './dash.component.html',
   styleUrls: ['./dash.component.css']
 })
 export class DashComponent implements OnInit {
-  constructor(private postService: PostService, private router: Router) {}
+  constructor(private postService: PostService, private router: Router, private sanitizer: DomSanitizer) {}
 
   carouselImages = [
     { url: 'https://via.placeholder.com/800x400', title: 'First Slide', description: 'This is the first slide description.' },
@@ -191,4 +192,23 @@ export class DashComponent implements OnInit {
     this.updatePaginatedPosts();
   }
   
+  sanitizeContent(content: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
+  }
+
+  extractFirstP(content: string): string {
+    const div = document.createElement('div');
+    div.innerHTML = content;
+    const p = div.querySelector('p');
+    if (p) {
+      const text = p.textContent || '';
+      return this.truncateText(text, 25); // Truncar al 25%
+    }
+    return '';
+  }
+
+  truncateText(text: string, percentage: number): string {
+    const length = Math.floor(text.length * (percentage / 100));
+    return text.substring(0, length) + (text.length > length ? '...' : '');
+  }
 }

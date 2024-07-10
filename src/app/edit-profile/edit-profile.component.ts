@@ -12,6 +12,7 @@ import * as AOS from 'aos';
 import { IaService } from '../services/analisis/ia.service';
 import { AnalysisResult } from '../models/analysis-result';
 import { error } from 'console';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -43,6 +44,7 @@ export class EditProfileComponent implements OnInit {
     private usuarioServices: UsuarioService,
     private postService: PostService,
     private router: Router
+    , private sanitizer: DomSanitizer
   ) {
     this.postForm = this.fb.group({
       img: [null],
@@ -78,41 +80,11 @@ export class EditProfileComponent implements OnInit {
   loadChart() {
     this.usuarioServices.MaterRecurrentes().subscribe((respuesta) => {
       this.materiasRecurrentes = respuesta || []; // Inicializa como un arreglo vacío si response es undefined
-      this.createChart(); // Llama a createChart después de cargar los datos
+      
     });
   }
 
-  createChart() {
-    const materiaNames = this.materiasRecurrentes.map(
-      (materia) => materia.materiaNombre
-    );
-    const postCounts = this.materiasRecurrentes.map(
-      (materia) => materia.postCount
-    );
-
-    this.chart = new Chart('materiaChart', {
-      type: 'bar',
-      data: {
-        labels: materiaNames,
-        datasets: [
-          {
-            label: 'Cantidad de Posts por materia',
-            data: postCounts,
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-  }
+ 
 
   openPost(postId?: number): void {
     console.log(postId);
@@ -237,5 +209,24 @@ export class EditProfileComponent implements OnInit {
         }
       }
     };
+  }
+  sanitizeContent(content: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
+  }
+
+  extractFirstP(content: string): string {
+    const div = document.createElement('div');
+    div.innerHTML = content;
+    const p = div.querySelector('p');
+    if (p) {
+      const text = p.textContent || '';
+      return this.truncateText(text, 25); // Truncar al 25%
+    }
+    return '';
+  }
+
+  truncateText(text: string, percentage: number): string {
+    const length = Math.floor(text.length * (percentage / 100));
+    return text.substring(0, length) + (text.length > length ? '...' : '');
   }
 }
