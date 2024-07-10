@@ -1,4 +1,7 @@
 <app-menu></app-menu>
+<div class="card">
+  <p-messages [(value)]="messages" [enableService]="false" [closable]="true"></p-messages>
+</div>
 <div class="profile-container container">
   <div class="row profile-header">
     <div class="col-md-3">
@@ -53,27 +56,37 @@
     </div>
   </div>
 
-  <div class="profile-history">
+  <div class="profile-history" #profileHistory>
     <h3>Historial de Posts</h3>
     <ul>
-      <li *ngFor="let post of posts">
+      <li *ngFor="let post of posts" class="post">
         <div class="posts" (click)="openPost(post.id)">
-          <h5>{{ post.titulo }}
-          <p>{{post.contenido}}</p>
+          <h5>{{ post.titulo }}</h5>
+          <p>{{ getExcerpt(post.contenido) }}</p>
           <span *ngIf="post && post.materia && post.materia.materia">{{ post.materia.materia }}</span>
-
-
-
-          </h5>
         </div>
-        </li>
+      </li>
     </ul>
   </div>
+  
+  <div class="profile-history" #profileHistory>
+    <h3>Materias predecidas</h3>
+    <ul>
+      <li *ngFor="let MateriasPredic of materiasAnalisadas.predicted_subjects" class="post">
+        <div class="posts">
+          <h5>{{ MateriasPredic }}</h5>
+          
+        </div>
+      </li>
+    </ul>
+  </div>
+  
 
   <div class="row profile-charts mt-4">
     <div class="col-12">
-      <h3>Estadísticas de post por materias</h3>
-      <canvas id="materiaChart"></canvas>
+      <div class="card">
+        <p-chart type="line" [data]="data" [options]="options"></p-chart>
+    </div>
     </div>
   </div>
 </div>

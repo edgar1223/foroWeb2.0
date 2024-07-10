@@ -80,7 +80,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
     overflow-x: auto;
-}
+  }
+
 
 .profile-history h3 {
     font-size: 25px;
@@ -91,23 +92,26 @@
 }
 
 .profile-history ul {
-    display: flex;
-    flex-direction: row;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: auto;
 }
 
 .posts {
-    padding: 20px;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 0 10px;
-    min-width: 250px;
-    max-width: 250px;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 10px;
+  min-width: 250px;
+  max-width: 250px;
+  transition: transform 0.3s ease-in-out; /* Transición suave para el efecto de escala */
 }
+
 
 .posts:hover {
     transform: scale(1.1);
@@ -140,4 +144,23 @@
 }
 .acciones{
   margin-top: 55px;
+}
+.ui-messages-success {
+  background-color: #d4edda !important; /* Verde claro */
+  border-color: #c3e6cb !important; /* Verde */
+  color: #155724 !important; /* Verde oscuro */
+}
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.aos-animate[data-aos="fade-right"] {
+  animation: slideInRight 1s ease forwards;
 }

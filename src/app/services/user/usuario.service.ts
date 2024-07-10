@@ -38,17 +38,17 @@ export class UsuarioService {
 
   updateUser(usuario: any, img: File | null) {
     const formData: FormData = new FormData();
-    formData.append('usuario', JSON.stringify(usuario));
+    formData.append("nombre",usuario. nombre);
+    formData.append("apellido",usuario. apellido);
+    formData.append("email",usuario. email);
+    formData.append("password",usuario. password);
     if (img) {
       formData.append('img', img, img.name);
     }
     const token = this.getToken();
+    
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.put(`${this.apiUrl}/update`, formData, { headers });
+    return this.http.put(`${this.apiUrl}/actualizar/${usuario.id}?token=${token}`, formData);
   }
   // Método para codificar en Base64
   private encode(value: string): string {

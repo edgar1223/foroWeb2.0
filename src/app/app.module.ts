@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,7 +11,7 @@ import { DashComponent } from './dash/dash.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
-import { PostFormComponent } from './post-form/post-form.component'; 
+import { PostFormComponent } from './post-form/post-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
@@ -33,11 +36,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { ChartModule } from 'primeng/chart';
 import { MatIconModule } from '@angular/material/icon';
 import { FileUploadModule } from 'primeng/fileupload';
-
+import { MessagesModule } from 'primeng/messages';
 import { ImageModule } from 'primeng/image';
 import { DialogModule } from 'primeng/dialog';
+import { MessageModule } from 'primeng/message';
 @NgModule({
-
   declarations: [
     AppComponent,
     LoginComponent,
@@ -46,13 +49,16 @@ import { DialogModule } from 'primeng/dialog';
     PostFormComponent,
     PostDetailComponent,
     EditProfileComponent,
-   
-    ProfesorComponent
+
+    ProfesorComponent,
   ],
   imports: [
-    BrowserModule,BrowserAnimationsModule,
-    AppRoutingModule,HttpClientModule
-    ,FormsModule,ReactiveFormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatInputModule,
     MatSelectModule,
@@ -61,19 +67,23 @@ import { DialogModule } from 'primeng/dialog';
     ButtonModule,
     InputTextModule,
     PaginatorModule,
-    MultiSelectModule,MatFormFieldModule,
+    MultiSelectModule,
+    MatFormFieldModule,
     InputNumberModule,
-    MatCardModule,CardModule,
-    MatChipsModule,ListboxModule,GalleriaModule,
-    MatGridListModule,ChartModule,
-    MatIconModule,FileUploadModule,
-    ImageModule, DialogModule,
+    MatCardModule,
+    CardModule,
+    MatChipsModule,
+    ListboxModule,
+    GalleriaModule,
+    MatGridListModule,
+    ChartModule,
+    MatIconModule,
+    FileUploadModule,
+    ImageModule,
+    DialogModule,
+    MessagesModule,MessageModule
   ],
-  providers: [
-    
-    provideClientHydration(),    provideAnimationsAsync(),
-
-  ],
-  bootstrap: [AppComponent]
+  providers: [provideClientHydration(), provideAnimationsAsync()],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
