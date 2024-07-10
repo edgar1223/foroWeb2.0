@@ -1,0 +1,208 @@
+
+.container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.p-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.p-table th,
+.p-table td {
+  padding: 12px;
+}
+
+.p-table th {
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+}
+
+.p-table td {
+  text-align: center;
+}
+
+.profesor-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+input[pInputText] {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.profesor-row:hover {
+  background-color: #f1f1f1;
+}
+
+.divider-row td {
+  background-color: #f9f9f9;
+  height: 10px;
+  border: none;
+}
+
+.divider-row td:before {
+  content: "";
+  display: block;
+  border-top: 1px solid #ddd;
+  margin: 0 auto;
+  width: 95%;
+}
+.tabla {
+  margin-top: 15px;
+}
+
+.styled-list {
+  list-style-type: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  font-family: "Arial", sans-serif; /* Set a nice font */
+}
+
+.styled-list li {
+  position: relative; /* Position for the delete button */
+  background: #f0f0f0; /* Light gray background */
+  margin: 10px 0; /* Space between items */
+  padding: 10px 15px; /* Inner spacing */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: background 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+}
+
+.styled-list li:hover {
+  background: #e0e0e0; /* Slightly darker on hover */
+  transform: scale(1.02); /* Slightly enlarge on hover */
+}
+
+.styled-list li::before {
+  content: "•"; /* Custom bullet */
+  color: #007bff; /* Blue color for bullet */
+  font-weight: bold; /* Bold bullet */
+  display: inline-block; /* Align bullet */
+  width: 1em; /* Width for spacing */
+  margin-left: -1em; /* Position bullet correctly */
+}
+
+.styled-list li:nth-child(odd) {
+  background: #e9ecef; /* Slightly different background for odd items */
+}
+
+.delete-btn {
+  position: absolute; /* Position the button inside the list item */
+  right: 10px; /* Space from the right edge */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for perfect centering */
+  background: #dc3545; /* Bootstrap danger color */
+  border: none; /* Remove default border */
+  color: white; /* White text color */
+  padding: 5px 10px; /* Padding for the button */
+  border-radius: 50%; /* Circular button */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background 0.3s; /* Smooth background transition */
+  font-size: 0.8rem; /* Smaller font size */
+  display: flex; /* Flexbox for centering icon */
+  align-items: center; /* Center icon vertically */
+  justify-content: center; /* Center icon horizontally */
+}
+
+.delete-btn:hover {
+  background: #c82333; /* Darker danger color on hover */
+}
+
+.delete-btn i {
+  margin: 0; /* Remove default margin from icon */
+}
+
+.lista {
+  margin-top: 3%;
+}
+.lista h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.card {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.custom-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.custom-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #3f51b5;
+}
+
+.custom-form-field {
+  width: 100%;
+}
+
+.custom-button {
+  background-color: #3f51b5;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.custom-button:hover {
+  background-color: #303f9f;
+}
+
+.styled-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.styled-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.styled-list button {
+  margin-left: 10px;
+}

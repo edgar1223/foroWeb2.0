@@ -12,8 +12,32 @@ import { PostFormComponent } from './post-form/post-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ProfesorComponent } from './profesor/profesor.component';
+import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { CardModule } from 'primeng/card';
+import { ListboxModule } from 'primeng/listbox';
+import { GalleriaModule } from 'primeng/galleria';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ChartModule } from 'primeng/chart';
+import { MatIconModule } from '@angular/material/icon';
+import { FileUploadModule } from 'primeng/fileupload';
+
+import { ImageModule } from 'primeng/image';
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
+
   declarations: [
     AppComponent,
     LoginComponent,
@@ -21,15 +45,34 @@ import { ButtonModule } from 'primeng/button';
     MenuComponent,
     PostFormComponent,
     PostDetailComponent,
-    EditProfileComponent
+    EditProfileComponent,
+   
+    ProfesorComponent
   ],
   imports: [
     BrowserModule,BrowserAnimationsModule,
     AppRoutingModule,HttpClientModule
-    ,FormsModule,ReactiveFormsModule,ButtonModule
+    ,FormsModule,ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    PaginatorModule,
+    MultiSelectModule,MatFormFieldModule,
+    InputNumberModule,
+    MatCardModule,CardModule,
+    MatChipsModule,ListboxModule,GalleriaModule,
+    MatGridListModule,ChartModule,
+    MatIconModule,FileUploadModule,
+    ImageModule, DialogModule,
   ],
   providers: [
-    provideClientHydration()
+    
+    provideClientHydration(),    provideAnimationsAsync(),
+
   ],
   bootstrap: [AppComponent]
 })

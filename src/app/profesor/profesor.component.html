@@ -1,0 +1,297 @@
+<app-menu></app-menu>
+<div class="container mt-5 p-4 rounded shadow">
+  <div class="row">
+    <div class="col-sm-10">
+      <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="exito">
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert('exito')"></button>
+        <strong>Exitoso!</strong> Profesor registrado.
+      </div>
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" *ngIf="formulario">
+        <mat-card class="custom-card">
+          <mat-card-header>
+            <mat-card-title class="custom-card-title">Agregar profesor</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" class="custom-form-field">
+                  <mat-label>ID</mat-label>
+                  <input matInput formControlName="id" placeholder="Introduce tu ID" (input)="onInput($event)" />
+                </mat-form-field>
+                <div *ngIf="mensajeError.controlNO" class="alert alert-danger mt-3">
+                  {{ mensajeError.controlNO }}
+                </div>
+                <div *ngIf="mensajeError.idRegistrado" class="alert alert-danger mt-3">
+                  {{ mensajeError.idRegistrado }}
+                </div>
+                <div *ngIf="mensajeError.id" class="alert alert-danger mt-3">
+                  {{ mensajeError.id }}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" class="custom-form-field">
+                  <mat-label>Nombre</mat-label>
+                  <input matInput formControlName="nombre" placeholder="Introduce tu nombre" />
+                </mat-form-field>
+                <div *ngIf="mensajeError.nombre" class="alert alert-danger mt-3">
+                  {{ mensajeError.nombre }}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" class="custom-form-field">
+                  <mat-label>Apellido</mat-label>
+                  <input matInput formControlName="apellido" placeholder="Introduce tu apellido" />
+                </mat-form-field>
+                <div *ngIf="mensajeError.apellido" class="alert alert-danger mt-3">
+                  {{ mensajeError.apellido }}
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" class="custom-form-field">
+                  <mat-label>Correo electrónico</mat-label>
+                  <input matInput type="email" formControlName="email" placeholder="Introduce tu correo electrónico" />
+                </mat-form-field>
+                <div *ngIf="mensajeError.email" class="alert alert-danger mt-3">
+                  {{ mensajeError.email }}
+                </div>
+                <div *ngIf="mensajeError.EmailNo" class="alert alert-danger mt-3">
+                  {{ mensajeError.EmailNo }}
+                </div>
+                <div *ngIf="mensajeError.emailRegistrado" class="alert alert-danger mt-3">
+                  {{ mensajeError.emailRegistrado }}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" class="custom-form-field">
+                  <mat-label>Contraseña</mat-label>
+                  <input matInput type="password" formControlName="password" placeholder="Introduce tu contraseña" />
+                </mat-form-field>
+                <div *ngIf="mensajeError.password" class="alert alert-danger mt-3">
+                  {{ mensajeError.password }}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" class="custom-form-field">
+                  <mat-label>Departamento</mat-label>
+                  <mat-select formControlName="departamento">
+                    <mat-option *ngFor="let departamento of departamentos" [value]="departamento.id">
+                      {{ departamento.nombre }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="mensajeError.departamento" class="alert alert-danger mt-3">
+                  {{ mensajeError.departamento }}
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <mat-form-field appearance="fill" class="custom-form-field">
+                  <mat-label>Materia</mat-label>
+                  <mat-select formControlName="materia" (selectionChange)="onMateriaChange($event)">
+                    <mat-option *ngFor="let materia of materias" [value]="materia.id">
+                      {{ materia.materia }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <h6>Materias Asignadas Profesor</h6>
+                <ul class="styled-list">
+                  <li *ngFor="let materia of ListaMaterias; let i = index">
+                    {{ materia.materia }}
+                    <button mat-icon-button class="btn btn-danger" color="warn" (click)="removeMateria(i)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div *ngIf="errorFormulario" class="alert alert-danger alert-dismissible fade show" role="alert">
+              <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert('errorFormulario')"></button>
+              <strong>{{ errorFormulario }}</strong>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit" class="w-100 btn btn-success">Registrar</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+      
+
+      <form (ngSubmit)="onRegister()" class="container mt-4 p-4 rounded shadow bg-light" *ngIf="formularioExcel">
+        <h2>Registrar una lista de profesores</h2>
+        <p-fileUpload
+          name="file"
+          url="URL_NOT_NEEDED"
+          (onSelect)="onUpload($event)"
+          accept=".xls,.xlsx,.csv"
+          [maxFileSize]="10000000"
+          [multiple]="false"
+          [customUpload]="true"
+          (uploadHandler)="sendFile()"
+        >
+          <ng-template pTemplate="content">
+            <p>Arrastre y suelte un archivo de Excel aquí para cargarlo.</p>
+          </ng-template>
+        </p-fileUpload>
+        <div *ngIf="mensajeError.length > 0 && mostrarErrores" class="alert alert-danger mt-3">
+          <button type="button" class="close btn btn-danger" aria-label="Close" (click)="cerrarErrores()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4>Errores</h4>
+          <ul>
+            <li *ngFor="let error of mensajeError">{{ error }}</li>
+          </ul>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-primary" (click)="abriFormulario()">
+        <i class="fas fa-user-plus"></i> Agregar Profesor
+      </button>
+      <button type="button" class="btn btn-primary" (click)="abriFormulario2()">
+        <i class="fas fa-users"></i> Agregar Profesores desde Excel
+      </button>
+    </div>
+  </div>
+
+  <div class="row tabla">
+    <h3>Lista de Profesores</h3>
+    <p-table
+      [value]="filteredProfesores"
+      [paginator]="true"
+      [rows]="5"
+      [sortField]="'id'"
+      [sortOrder]="1"
+      class="table table-hover"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="img">
+            Imagen <p-sortIcon field="img"></p-sortIcon>
+          </th>
+          <th pSortableColumn="nombre">
+            Nombre <p-sortIcon field="nombre"></p-sortIcon>
+          </th>
+          <th pSortableColumn="apellido">
+            Apellido <p-sortIcon field="apellido"></p-sortIcon>
+          </th>
+          <th pSortableColumn="email">
+            Email <p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th pSortableColumn="departamentoId">
+            Departamento <p-sortIcon field="departamentoId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="materias">
+            Materias <p-sortIcon field="materias"></p-sortIcon>
+          </th>
+          <th>
+            <button
+              pButton
+              type="button"
+              (click)="resetFilters()"
+              class="btn btn-primary"
+            >
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="applyFilter($event, 'id')"
+              placeholder="Buscar ID"
+              class="form-control"
+            />
+          </th>
+          <th></th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="applyFilter($event, 'nombre')"
+              placeholder="Buscar Nombre"
+              class="form-control"
+            />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="applyFilter($event, 'apellido')"
+              placeholder="Buscar Apellido"
+              class="form-control"
+            />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="applyFilter($event, 'email')"
+              placeholder="Buscar Email"
+              class="form-control"
+            />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="applyFilter($event, 'departamentoId')"
+              placeholder="Buscar Departamento"
+              class="form-control"
+            />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="applyFilter($event, 'materias')"
+              placeholder="Buscar materia"
+              class="form-control"
+            />
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-profesor>
+        <tr class="profesor-row">
+          <td>{{ profesor.id }}</td>
+          <td>
+            <img
+              [src]="apiUrl + profesor.img"
+              alt="{{ profesor.nombre }}"
+              class="profesor-img"
+            />
+          </td>
+          <td>{{ profesor.nombre }}</td>
+          <td>{{ profesor.apellido }}</td>
+          <td>{{ profesor.email }}</td>
+          <td>{{ profesor.departamento }}</td>
+          <td>
+            <ul class="styled-list">
+              <li *ngFor="let materia of profesor.materias">
+                {{ materia }}
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr class="divider-row">
+          <td colspan="7"></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="row lista">
+    <h3>Profesores con mas menciones por estudiantes</h3>
+    <div class="card">
+      <p-chart type="doughnut" [data]="data" [options]="options"></p-chart>
+    </div>
+  </div>
+
+</div>

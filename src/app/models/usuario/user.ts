@@ -7,5 +7,6 @@ export interface User {
         imgUrl:string;
         departamentoId?:number;
         semestre?:string;
-    
+
+    materias: string[];
 }

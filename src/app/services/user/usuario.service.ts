@@ -8,6 +8,7 @@ import { MateriaRecurentes } from '../../models/usuario/materia-recurentes';
   providedIn: 'root'
 })
 export class UsuarioService {
+ 
 
   private apiUrl = 'http://localhost:8080/api/usuarios';
   private readonly USER_TYPE_KEY = 'userType';
@@ -74,5 +75,25 @@ export class UsuarioService {
   clearUserType(): void {
     localStorage.removeItem(this.USER_TYPE_KEY);
   }
+
+  findAllProofesores() :Observable<User[]>{
+    const token = this.getToken();
+    return this.http.get<User[]>(`${this.apiUrl}/Profesor/1?token=${token}`);
+  }
+  setProfesor(id: number, nombre: string, apellido: string, email: string, lista: number[], password: string,
+     departamento: number) :Observable<any> {
+      const RegistroData = { 
+        "id": id,
+        "nombre": nombre,
+        "apellido": apellido,
+        "email": email,
+        "password": password,
+        "materiaIds":lista,
+        "departamentoId":departamento 
+        };
+        const token = this.getToken();
+        return this.http.post<any>(`${this.apiUrl}/profesor?token=${token}`, RegistroData);
+  }
+
 } 
 
