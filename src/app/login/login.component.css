@@ -8,48 +8,55 @@ body {
   background-image: url('https://moodle.oaxaca.tecnm.mx/pluginfile.php/1/theme_moove/loginbgimg/1707760593/explanada.JPG');
   background-size: cover;
   background-position: center;
-  animation: fadeIn 1s ease-in-out;
-  display: flex;
-  align-items: center;
+  align-items: flex-start; /* Alineación para que empiece desde arriba */
+  min-height: 100vh; 
   justify-content: center;
-  min-height: 100vh;
 }
 
 .card {
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transform: scale(0.9);
-  animation: scaleUp 0.5s ease-in-out forwards;
+}
+
+@media (min-width: 768px) {
+  .card {
+    flex-direction: row;
+  }
 }
 
 .card-left {
-  width: 50%;
+  width: 100%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
   text-align: center;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .card-left {
+    width: 50%;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+  }
 }
 
 .card-left h2 {
   font-size: 2rem;
   margin-bottom: 20px;
   color: #333;
-  animation: slideIn 1s ease-out forwards;
 }
 
 .card-left p {
   font-size: 1.1rem;
   color: #555;
   margin-bottom: 20px;
-  animation: slideIn 1s ease-out forwards;
 }
 
 .img-container {
@@ -63,7 +70,6 @@ body {
   height: 150px;
   border-radius: 50%;
   transition: transform 0.3s ease-in-out;
-  animation: fadeInProfile 1s ease-in-out forwards;
 }
 
 .profile-img:hover {
@@ -71,17 +77,24 @@ body {
 }
 
 .card-right {
-  width: 50%;
+  width: 100%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-right: 15px;
+}
+
+@media (min-width: 768px) {
+  .card-right {
+    width: 50%;
+  }
 }
 
 .divider {
   width: 1px;
   background-color: rgba(0, 0, 0, 0.1);
-  margin: 0 20px;
+  margin: 0 5px;
 }
 
 .tab-pane {
@@ -98,15 +111,6 @@ body {
 
 .fade.show {
   opacity: 1;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .form-control {
@@ -163,4 +167,22 @@ body {
   text-align: center;
   color: #333;
   font-weight: bold;
+}
+@media (max-width: 767px) {
+  .container-fluid {
+    flex-direction: column; /* Cambia a dirección de columna en pantallas pequeñas */
+    justify-content: flex-start; /* Asegura que comience desde arriba */
+   /* align-items: stretch; /* Alineación de estiramiento para ocupar toda la altura */
+    min-height: 100%; /* Elimina la altura mínima para permitir el estiramiento */
+    overflow-y: auto; 
+  }
+
+  .card {
+    max-width: none; /* Ancho máximo sin restricción en pantallas pequeñas */
+  }
+
+  .card-right {
+    order: 1; /* Cambia el orden del formulario a la parte superior */
+    overflow-y: auto; 
+  }
 }

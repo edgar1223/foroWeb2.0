@@ -1,14 +1,14 @@
 <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
-  <div class="card d-flex flex-row">
-    <div class="card-left p-4">
+  <div class="card d-flex flex-column flex-md-row w-100">
+    <div class="card-left p-4 col-md-6">
       <h2>Bienvenido</h2>
       <p>Bienvenido a nuestra aplicación. Por favor, inicia sesión o regístrate para continuar.</p>
       <div class="img-container">
         <img src="assets/logo.jpeg" alt="Profile Image" class="profile-img">
       </div>
     </div>
-    <div class="divider"></div>
-    <div class="card-right">
+    <div class="divider d-none d-md-block"></div>
+    <div class="card-right p-4 col-md-6">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
@@ -57,13 +57,24 @@
           <form [formGroup]="registerForm" (ngSubmit)="onRegistro()" [@slideInOut]>
             <div class="mb-3">
               <label for="control" class="form-label">Número de control</label>
-              <input type="number" formControlName="control" class="form-control" id="control" required>
+              <input 
+                type="text" 
+                formControlName="control" 
+                class="form-control" 
+                id="control" 
+                required 
+                (input)="onControlInput($event)"
+              >
               <div *ngIf="registerForm.controls['control'].invalid && (registerForm.controls['control'].dirty || registerForm.controls['control'].touched)">
                 <div *ngIf="registerForm.controls['control'].errors?.['required']" class="text-danger">
                   El número de control es requerido.
                 </div>
+                <div *ngIf="registerForm.controls['control'].errors?.['pattern']" class="text-danger">
+                  El número de control debe ser un número positivo de hasta 8 dígitos.
+                </div>
               </div>
             </div>
+            
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
               <input type="text" formControlName="nombre" class="form-control" id="nombre" required>
@@ -96,17 +107,24 @@
             </div>
             <div class="mb-3">
               <label for="semestre" class="form-label">Semestre</label>
-              <input type="number" formControlName="semestre" class="form-control" id="semestre" required>
+              <input 
+                type="text" 
+                formControlName="semestre" 
+                class="form-control" 
+                id="semestre" 
+                required 
+                (input)="onSemestreInput($event)"
+              >
               <div *ngIf="registerForm.controls['semestre'].invalid && (registerForm.controls['semestre'].dirty || registerForm.controls['semestre'].touched)">
                 <div *ngIf="registerForm.controls['semestre'].errors?.['required']" class="text-danger">
                   El semestre es requerido.
                 </div>
-                <div *ngIf="registerForm.controls['semestre'].errors?.['min']" class="text-danger">
-                  El semestre debe ser mayor a 0.
+                <div *ngIf="registerForm.controls['semestre'].errors?.['pattern']" class="text-danger">
+                  El semestre debe ser un número del 1 al 12.
                 </div>
               </div>
             </div>
-
+            
             <div class="mb-3">
               <label for="departamento" class="form-label">Departamento</label>
               <select id="departamento" formControlName="departamento" class="form-control" required>

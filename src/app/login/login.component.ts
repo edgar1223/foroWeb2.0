@@ -58,11 +58,11 @@ export class LoginComponent implements OnInit {
       });
   
       this.registerForm = this.fb.group({
-        control: ['', Validators.required],
+        control: ['', [Validators.required, Validators.pattern(/^[1-9]\d{0,7}$/)]],
         nombre: ['', Validators.required],
         apellido: ['', Validators.required],
         email2: ['', [Validators.required, Validators.email]],
-        semestre: ['', [Validators.required, Validators.min(1)]],
+        semestre: ['', [Validators.required, Validators.pattern(/^(1[0-2]|[1-9])$/)]],
         departamento:['', [Validators.required, Validators.min(1)]],
         contrase: ['', [Validators.required, Validators.minLength(6)]]
       });
@@ -163,5 +163,38 @@ export class LoginComponent implements OnInit {
   changeTab(tabIndex: number): void {
     this.currentTab = tabIndex;
     
+  }
+
+  onControlInput(event: any): void {
+    let inputValue = event.target.value;
+
+    // Eliminar caracteres no numéricos
+    inputValue = inputValue.replace(/\D/g, '');
+
+    // Limitar a 8 dígitos
+    if (inputValue.length > 8) {
+      inputValue = inputValue.slice(0, 8);
+    }
+
+    // Actualizar el valor en el formulario
+    this.registerForm.patchValue({
+      control: inputValue
+    });
+  }
+  onSemestreInput(event: any): void {
+    let inputValue = event.target.value;
+
+    // Eliminar caracteres no numéricos
+    inputValue = inputValue.replace(/\D/g, '');
+
+    // Limitar a un solo dígito si supera 1 dígito
+    if (inputValue.length > 1) {
+      inputValue = inputValue.slice(0, 2);
+    }
+
+    // Actualizar el valor en el formulario
+    this.registerForm.patchValue({
+      semestre: inputValue
+    });
   }
 }
