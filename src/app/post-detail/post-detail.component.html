@@ -9,9 +9,9 @@
       </div>
   
       <div *ngIf="post.archivo" class="text-center mt-3">
-        <a [href]="'http://localhost:8080' + post.archivo" target="_blank">
-          <button class="btn btn-primary">Ver Documento</button>
-        </a>
+        
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Ver Documento</button>
+        
       </div>
   
       <div class="post-user d-flex align-items-center mt-4">
@@ -54,3 +54,11 @@
     </div>
   </div>
   
+
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-custom-width">
+        <div class="modal-content">
+            <embed [src]="sanitizedPdfUrl" type="application/pdf" class="pdf-embed" />
+        </div>
+    </div>
+  </div>

@@ -11,8 +11,9 @@
           (click)="openPost(post.id)"
           class="similar-post"
         >
-          <h5>{{ post.titulo }}</h5>
-          <p>{{ post.contenido }}</p>
+          <h4>{{ post.titulo }}</h4>
+          <div [innerHTML]="sanitizeContent(extractFirstP(post.contenido))"></div>
+
         </div>
       </div>
     </div>
@@ -66,10 +67,7 @@
           La materia es requerida.
         </div>
       </div>
-      <div class="form-group">
-        <label for="img">Imagen (opcional)</label>
-        <input type="file" id="img" (change)="onFileChange($event, 'img')" />
-      </div>
+      
       <div class="form-group">
         <label for="archivo">Archivo (opcional)</label>
         <input

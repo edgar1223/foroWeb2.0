@@ -2,20 +2,25 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from '../services/post-service.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { environment } from '../../environments/environment';
+import { Post } from '../models/post';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.css'
 })
 export class PostDetailComponent {
-  post: any;
+  post!: any;
   comments: any[] = [];
   commentForm: FormGroup;
-
+   apiUrl = environment.apiImg;
+   sanitizedPdfUrl!: SafeResourceUrl;
   constructor(
     private route: ActivatedRoute,
     private postService: PostService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer
   ) {
     this.commentForm = this.fb.group({
       titulo: [''],
@@ -29,13 +34,15 @@ export class PostDetailComponent {
     if (postId) {
       this.loadPostDetails(+postId);
      
-      //this.loadComments(+postId);
+     
     }
+   
   }
 
   loadPostDetails(id: number): void {
     this.postService.getPostById(id).subscribe(post => {
       this.post = post;
+      this.sanitizedPdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.apiUrl+this.post.archivo);
       console.log('datalles ', this.post)
     });
   }

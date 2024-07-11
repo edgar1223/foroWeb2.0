@@ -4,6 +4,7 @@ import { PostService } from '../services/post-service.service';
 import { Post } from '../models/post';
 import {Materia} from '../models/materia/materia'
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-form',
@@ -11,8 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./post-form.component.css']
 })
 export class PostFormComponent implements OnInit {
+
   openPost(postId?: number): void {
-    console.log(postId)
     if (postId !== undefined && postId !== null) {
       this.router.navigate(['/post', postId]);
     } else {
@@ -27,6 +28,7 @@ export class PostFormComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private postService: PostService,
+     private sanitizer: DomSanitizer
   ) {
     this.postForm = this.fb.group({
       titulo: ['', Validators.required],
@@ -76,6 +78,7 @@ export class PostFormComponent implements OnInit {
     this.postService.createPost(post).subscribe(
       response => {
         console.log('Post created successfully', response);
+        this.router.navigate(['/post', response.id]);
       },
       error => {
         console.error('Error creating post', error);
@@ -96,5 +99,25 @@ export class PostFormComponent implements OnInit {
     } else {
       this.similarPosts = [];
     }
+  }
+
+  sanitizeContent(content: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
+  }
+
+  extractFirstP(content: string): string {
+    const div = document.createElement('div');
+    div.innerHTML = content;
+    const p = div.querySelector('p');
+    if (p) {
+      const text = p.textContent || '';
+      return this.truncateText(text, 25); // Truncar al 25%
+    }
+    return '';
+  }
+
+  truncateText(text: string, percentage: number): string {
+    const length = Math.floor(text.length * (percentage / 100));
+    return text.substring(0, length) + (text.length > length ? '...' : '');
   }
 }
