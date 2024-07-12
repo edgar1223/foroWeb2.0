@@ -14,9 +14,14 @@
         
       </div>
   
-      <div class="post-user d-flex align-items-center mt-4">
-        <img [src]="'http://localhost:8080' +  post.usuario.img" alt="Usuario Image" class="rounded-circle me-3">
-        <span>{{ post.usuario.nombre }}</span><span> {{post.usuario.apellido}}</span>
+      
+      <div class="d-flex align-items-center justify-content-between mt-4">
+        <div class="d-flex align-items-center post-user">
+          <img [src]="'http://localhost:8080' + post.usuario?.imgUrl" alt="Usuario Image" class="rounded-circle me-3">
+          <span>{{ post.usuario?.nombre }}</span>
+          <span>{{ post.usuario?.apellido }}</span>
+        </div>
+        <span class="ml-auto">Fecha de Publicacion: {{ post.fechaFormatted }}</span> <!-- Usa ml-auto para alinear a la derecha -->
       </div>
   
       <div class="comment-form mt-5">
@@ -29,27 +34,37 @@
   
           <div class="mb-3">
             <label for="descripcion" class="form-label">Descripción:</label>
-            <textarea id="descripcion" formControlName="descripcion" class="form-control"></textarea>
+            <p-editor formControlName="descripcion"  [style]="{ height: '200px' }"></p-editor>
+
           </div>
   
-          <div class="mb-3">
-            <label for="img" class="form-label">Imagen:</label>
-            <input id="img" type="file" (change)="onFileChange($event)" class="form-control">
-          </div>
-  
+          
           <button type="submit" class="btn btn-primary w-100">Agregar Comentario</button>
         </form>
       </div>
   
       <div class="comments-section mt-5">
         <h3>Comentarios</h3>
-        <div *ngFor="let comment of comments" class="comment shadow-sm p-3 mb-4 bg-white rounded">
-          <h4>{{ comment.titulo }}</h4>
-          <p>{{ comment.descripcion }}</p>
-          <div *ngIf="comment.img" class="text-center">
-            <img [src]="comment.img" alt="Comment Image" class="comment-image">
-          </div>
+
+        <div *ngFor="let comment of comments" class="comment-card">
+          <p-card [header]="comment.titulo">
+            <div class="m-0">
+              <div [innerHTML]="comment.contenido"></div>
+            
+              <div class="d-flex align-items-center justify-content-between mt-4">
+                <div class="d-flex align-items-center post-user">
+                  <img [src]="'http://localhost:8080' + comment.usuario?.imgUrl" alt="Usuario Image" class="rounded-circle me-3">
+                  <span>{{ comment.usuario?.nombre }}</span>
+                  <span>{{ comment.usuario?.apellido }}</span>
+                </div>
+                <span class="ml-auto">Fecha de Publicacion: {{ comment.formattedDate }}</span> <!-- Usa ml-auto para alinear a la derecha -->
+              </div>
+
+            </div>
+          </p-card>
         </div>
+        
+        
       </div>
     </div>
   </div>

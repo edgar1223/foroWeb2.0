@@ -38,6 +38,7 @@ export class EditProfileComponent implements OnInit {
   materiasAnalisadas!:AnalysisResult;
   data: any;
   options: any;
+  PostBandera:boolean=false;
   constructor(
     private fb: FormBuilder,
     private analisis:IaService,
@@ -54,12 +55,11 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProfile();
-    this.loadPosts();
-    this.loadChart();
     this.rol = this.usuarioServices.getUserType();
-    this.analisiMaterias();
-    this. tendencias();
-    this.grafica();
+
+    this.loadPosts();
+
+   
 
 
   }
@@ -67,13 +67,18 @@ export class EditProfileComponent implements OnInit {
   loadProfile() {
     this.usuarioServices.UsuarioByID().subscribe((user) => {
       this.user = user;
-      console.log(this.user);
+      console.log("usuario",this.user);
     });
   }
 
   loadPosts() {
     this.usuarioServices.PostByUsuariId().subscribe((respuesta) => {
-      this.posts = respuesta || []; // Inicializa como un arreglo vacío si response es undefined
+      this.posts = respuesta || []; 
+      this.loadChart();
+      this.analisiMaterias();
+      this. tendencias();
+      this.grafica();
+      this.PostBandera=true
     });
   }
 

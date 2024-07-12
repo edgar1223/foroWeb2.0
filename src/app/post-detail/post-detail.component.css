@@ -75,3 +75,9 @@
   width: 100%;
   height: 90vh; /* Adjust the height as needed */
 }
+.comment-card {
+  margin-bottom: 16px; /* Adjust the value as needed */
+}
+.derecha{
+  margin-left: -80%;
+}

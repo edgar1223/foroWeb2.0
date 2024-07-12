@@ -34,8 +34,8 @@ export class PostService {
   searchMateria(): Observable<Materia[]> {
     return this.http.get<Materia[]>(`http://localhost:8080/api/materia/materia`);
   }
-  getPostById(id: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:8080/api/post/${id}`);
+  getPostById(id: number): Observable<Post> {
+    return this.http.get<Post>(`http://localhost:8080/api/post/${id}`);
   }
   addComment(postId: number, comment: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/${postId}/comments`, comment);
