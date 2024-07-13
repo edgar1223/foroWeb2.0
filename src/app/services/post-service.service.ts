@@ -8,7 +8,9 @@ import {Materia} from '../models/materia/materia'
 })
 export class PostService {
   private apiUrl = 'http://localhost:8080/api/post/post';
-
+  private getToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
   constructor(private http: HttpClient) {}
 
   createPost(post: Post): Observable<Post> {
@@ -35,7 +37,8 @@ export class PostService {
     return this.http.get<Materia[]>(`http://localhost:8080/api/materia/materia`);
   }
   getPostById(id: number): Observable<Post> {
-    return this.http.get<Post>(`http://localhost:8080/api/post/${id}`);
+    const token=this.getToken();
+    return this.http.get<Post>(`http://localhost:8080/api/post/${id}?token=${token}`);
   }
   addComment(postId: number, comment: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/${postId}/comments`, comment);

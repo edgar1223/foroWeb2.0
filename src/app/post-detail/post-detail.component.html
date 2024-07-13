@@ -1,6 +1,6 @@
 <app-menu></app-menu>
 <div class="container post-container">
-    <div class="post-content">
+    <div class="post-content" *ngIf="post">
       <h1>{{ post.titulo }}</h1>
       <div [innerHTML]="post.contenido"></div>
   

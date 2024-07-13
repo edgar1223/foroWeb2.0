@@ -41,6 +41,11 @@ import { ImageModule } from 'primeng/image';
 import { DialogModule } from 'primeng/dialog';
 import { MessageModule } from 'primeng/message';
 import { EditorModule } from 'primeng/editor';
+import { WebSocketService } from './services/WebSocket/web-socket.service';
+import { InjectableRxStompConfig, RxStompService } from '@stomp/ng2-stompjs'
+import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
+import { ModalNotificacionesComponent } from './modal-notificaciones/modal-notificaciones.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +57,7 @@ import { EditorModule } from 'primeng/editor';
     EditProfileComponent,
 
     ProfesorComponent,
+     ModalNotificacionesComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,9 +89,13 @@ import { EditorModule } from 'primeng/editor';
     ImageModule,
     DialogModule,
     MessagesModule,MessageModule,
-    EditorModule
+    EditorModule,
+    AvatarModule,
+    BadgeModule
   ],
-  providers: [provideClientHydration(), provideAnimationsAsync()],
+  providers: [provideClientHydration(), provideAnimationsAsync(),
+  
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
