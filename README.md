@@ -1,27 +1,108 @@
-# ForoWeb
+# Foro Web - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.5.
+Este proyecto es la interfaz de usuario del **Foro Web**, desarrollada en **Angular**, que consume los endpoints proporcionados por el backend desarrollado en **Spring Boot**. Proporciona funcionalidades como autenticación, gestión de publicaciones, edición de perfiles y más.
 
-## Development server
+## Tecnologías Utilizadas
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Angular 15**
+- **TypeScript**
+- **Angular Material** para componentes visuales
+- **RxJS** para manejo de flujos reactivos
+- **Angular Router** para navegación
+- **SCSS** para estilos personalizados
 
-## Code scaffolding
+## Características Principales
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. **Autenticación**: Inicio de sesión y protección de rutas con guardas.
+2. **Gestión de publicaciones**: Crear, editar, y ver publicaciones detalladas.
+3. **Edición de perfil**: Actualización de datos del usuario.
+4. **Menú responsivo**: Menú para navegación entre funcionalidades.
+5. **Consumo de APIs**: Integración con el backend para manejar usuarios, publicaciones, materias y departamentos.
 
-## Build
+## Estructura del Proyecto
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+El proyecto sigue una arquitectura modular para facilitar la escalabilidad:
 
-## Running unit tests
+### Core Components
+- **App Module**: Módulo raíz.
+- **Routing Module**: Configuración de rutas de la aplicación.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Feature Components
+- **Login Component**: Página de inicio de sesión.
+- **Dashboard Component**: Panel principal de la aplicación.
+- **Post Form Component**: Formulario para crear publicaciones.
+- **Menu Component**: Menú de navegación.
+- **Post Detail Component**: Vista detallada de una publicación.
+- **Edit Profile Component**: Página de edición del perfil de usuario.
 
-## Running end-to-end tests
+### Services
+- **Auth Service**: Gestión de autenticación y autorización.
+- **User Service**: Gestión de usuarios.
+- **Post Service**: Gestión de publicaciones.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Models
+- **User Model**: Representación de datos de usuario.
+- **Post Model**: Representación de datos de publicaciones.
+- **Materias Model**: Representación de materias.
+- **Departamentos Model**: Representación de departamentos.
 
-## Further help
+## Requisitos Previos
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. **Node.js** (v16 o superior).
+2. **Angular CLI** (v15 o superior).
+3. Backend del Foro Web (API disponible en `http://localhost:8080`).
+
+## Instalación
+
+1. Clona el repositorio:
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   cd frontend-foro
+   ```
+###  Instala las dependencias:
+   ```bash
+npm install
+   ```
+### Configura los endpoints del backend en el archivo environment.ts 
+   ```bash
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api'
+};
+   ```
+## Ejecución
+1. Inicia la aplicación en modo desarrollo:
+   ```bash
+   ng serve
+      ```
+
+2. Abre tu navegador en http://localhost:4200.
+### Endpoints Consumidos
+1. Usuarios
+
+    1.1. POST /api/usuarios/login: Iniciar sesión.
+    1.2. GET /api/usuarios/token: Obtener información del usuario autenticado.
+
+2. Publicaciones
+
+   2.1. POST /api/post/post: Crear publicación.
+   2.2. GET /api/post/{id}: Ver detalles de una publicación.
+   2.3. DELETE /api/post/{id}: Eliminar publicación.
+
+3. Materias
+
+    3.1. GET /api/materias: Obtener lista de materias.
+
+4. Departamentos
+
+    4.1. GET /api/departamentos: Obtener lista de departamentos.
+
+# Backend
+https://github.com/edgar1223/foroWEBCOmplleto.git
+
+
+
+
+   
+
+
